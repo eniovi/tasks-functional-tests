@@ -2,7 +2,9 @@ package br.com.eniovi.tasks.functional;
 
 import static org.junit.Assert.assertEquals;
 
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
@@ -13,24 +15,27 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class TasksTest {
 
 	private WebDriver driver;
 
 	@Before
-	public void setup() throws URISyntaxException {
+	public void setup() throws URISyntaxException, MalformedURLException {
 		final Path chromeDriverPath = Paths
 				.get(ClassLoader.getSystemResource("drivers/chrome-v99/linux-chromedriver").toURI());
 		System.setProperty("webdriver.chrome.driver", chromeDriverPath.toString());
-		driver = new ChromeDriver();
+
+		final DesiredCapabilities cap = DesiredCapabilities.chrome();
+		driver = new RemoteWebDriver(new URL("http://172.29.0.1:4444/wd/hub"), cap);
 		driver.navigate().to("http://172.29.0.3:8080/tasks");
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 
 	@Test
-	public void shouldNotAddTasksWithoutDate() {
+	public void shouldNotAddTasksWithoutDate() throws MalformedURLException {
 		try {
 			driver.findElement(By.id("addTodo")).click();
 
@@ -46,7 +51,7 @@ public class TasksTest {
 	}
 
 	@Test
-	public void shouldNotAddTasksWithoutDescription() {
+	public void shouldNotAddTasksWithoutDescription() throws MalformedURLException {
 		try {
 			driver.findElement(By.id("addTodo")).click();
 
@@ -65,7 +70,7 @@ public class TasksTest {
 	}
 
 	@Test
-	public void shouldNotAddTasksWithPastDate() {
+	public void shouldNotAddTasksWithPastDate() throws MalformedURLException {
 		try {
 			driver.findElement(By.id("addTodo")).click();
 
@@ -84,7 +89,7 @@ public class TasksTest {
 	}
 
 	@Test
-	public void shouldSaveTaskWithSuccess() {
+	public void shouldSaveTaskWithSuccess() throws MalformedURLException {
 		try {
 			driver.findElement(By.id("addTodo")).click();
 
