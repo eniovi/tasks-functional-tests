@@ -95,10 +95,10 @@ public class TasksTest {
 
 			driver.findElement(By.id("task")).sendKeys("Teste via Selenium");
 
-			final LocalDate today = LocalDate.now();
+			final LocalDate tomorrow = LocalDate.now().plusDays(1);
 			final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-			final String todayFormatter = today.format(formatter);
-			driver.findElement(By.id("dueDate")).sendKeys(todayFormatter);
+			final String tomorrowFormatter = tomorrow.format(formatter);
+			driver.findElement(By.id("dueDate")).sendKeys(tomorrowFormatter);
 
 			driver.findElement(By.id("saveButton")).click();
 
