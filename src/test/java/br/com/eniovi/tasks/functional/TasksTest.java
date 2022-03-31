@@ -5,8 +5,6 @@ import static org.junit.Assert.assertEquals;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
@@ -24,12 +22,8 @@ public class TasksTest {
 
 	@Before
 	public void setup() throws URISyntaxException, MalformedURLException {
-		final Path chromeDriverPath = Paths
-				.get(ClassLoader.getSystemResource("drivers/chrome-v99/linux-chromedriver").toURI());
-		System.setProperty("webdriver.chrome.driver", chromeDriverPath.toString());
-
 		final DesiredCapabilities cap = DesiredCapabilities.chrome();
-		driver = new RemoteWebDriver(new URL("http://172.29.0.1:4444/wd/hub"), cap);
+		driver = new RemoteWebDriver(new URL("http://172.29.0.7:4444/wd/hub"), cap);
 		driver.navigate().to("http://172.29.0.3:8080/tasks");
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
