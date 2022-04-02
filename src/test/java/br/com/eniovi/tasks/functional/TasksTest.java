@@ -25,7 +25,7 @@ public class TasksTest {
 		final DesiredCapabilities cap = DesiredCapabilities.chrome();
 		driver = new RemoteWebDriver(new URL("http://172.29.0.7:4444/wd/hub"), cap);
 		driver.navigate().to("http://172.29.0.3:8080/tasks");
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 	}
 
 	@Test
